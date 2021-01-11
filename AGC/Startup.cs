@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AGC.Core.Interfaces;
+using AGC.Hubs;
 using AGC.Infraestructure.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -27,6 +28,7 @@ namespace AGC
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSignalR();
             services.AddControllers();
             services.AddTransient<IUsuario, UsuarioRepository>();
         }
@@ -48,6 +50,7 @@ namespace AGC
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHub<Notificacion>("noti");
             });
         }
     }
